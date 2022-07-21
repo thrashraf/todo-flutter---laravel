@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:task/network_utils/api.dart';
+import 'package:task/widgets/Navbar.dart';
 import 'package:task/widgets/custom_textField.dart';
 
 class Home extends StatefulWidget {
@@ -17,6 +18,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Map user = {};
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   List todos = [
     {'title': 'lol', 'isCheck': true},
@@ -59,6 +61,24 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      drawer: NavBar(),
+      appBar: AppBar(
+        
+        title: Text('test'),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.grey[500]),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.search_outlined),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.notifications_outlined),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: (Padding(
           padding: EdgeInsets.all(30),
@@ -69,6 +89,36 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     IconButton(
+                  //       icon: Icon(
+                  //         Icons.menu,
+                  //         color: Colors.grey[500],
+                  //       ),
+                  //       onPressed: () {
+                  //         () => Scaffold.of(context).openDrawer();
+                  //       },
+                  //     ),
+                  //     Row(
+                  //       children: [
+                  //         Icon(
+                  //           Icons.search_outlined,
+                  //           color: Colors.grey[500],
+                  //         ),
+                  //         SizedBox(width: 30),
+                  //         Icon(
+                  //           Icons.notifications_outlined,
+                  //           color: Colors.grey[500],
+                  //         ),
+                  //       ],
+                  //     )
+                  //   ],
+                  // ),
+                  // const SizedBox(
+                  //   height: 50,
+                  // ),
                   Text(
                     "What's up ${user["name"]}!",
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
@@ -88,55 +138,58 @@ class _HomeState extends State<Home> {
                         fontSize: 12),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
                   ListView.builder(
                       shrinkWrap: true,
                       itemCount: todos.length,
                       itemBuilder: (context, index) {
-                        return Slidable(
-                          key: UniqueKey(),
-                          endActionPane: ActionPane(
-                            motion: DrawerMotion(),
-                            children: [
-                              SlidableAction(
-                                // An action can be bigger than the others.
-                                backgroundColor: Colors.blue,
-                                foregroundColor: Colors.white,
-                                icon: Icons.edit,
-                                label: 'Edit',
-                                onPressed: (BuildContext context) {
-                                  _dialogBuilder(
-                                      context: context,
-                                      todoController: todoController,
-                                      action: () => editTodo(index));
-                                },
-                              ),
-                              SlidableAction(
-                                backgroundColor: Colors.red,
-                                foregroundColor: Colors.white,
-                                icon: Icons.delete,
-                                label: 'Delete',
-                                onPressed: (BuildContext context) {
-                                  setState(() {
-                                    todos.removeAt(index);
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.grey[200]),
+                        return Container(
+                          margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                          child: Slidable(
+                            key: UniqueKey(),
+                            endActionPane: ActionPane(
+                              motion: DrawerMotion(),
+                              children: [
+                                SlidableAction(
+                                  // An action can be bigger than the others.
+                                  backgroundColor: Colors.blue,
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.edit,
+                                  label: 'Edit',
+                                  onPressed: (BuildContext context) {
+                                    _dialogBuilder(
+                                        context: context,
+                                        todoController: todoController,
+                                        action: () => editTodo(index),
+                                        mode: 'edit');
+                                  },
+                                ),
+                                SlidableAction(
+                                  backgroundColor: Colors.red,
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.delete,
+                                  borderRadius: const BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                      bottomRight: Radius.circular(10)),
+                                  label: 'Delete',
+                                  onPressed: (BuildContext context) {
+                                    setState(() {
+                                      todos.removeAt(index);
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
                             child: CheckboxListTile(
+                              contentPadding: const EdgeInsets.all(7),
                               title: Text(
                                 todos[index]["title"],
                                 style: TextStyle(
                                     decoration: todos[index]["isCheck"]
                                         ? TextDecoration.lineThrough
-                                        : null),
+                                        : null,
+                                    fontSize: 20),
                               ),
                               controlAffinity: ListTileControlAffinity.leading,
                               onChanged: (bool? value) {
@@ -145,10 +198,12 @@ class _HomeState extends State<Home> {
                                       !todos[index]["isCheck"];
                                 });
                               },
-                              activeColor: Colors.blue,
+                              activeColor: Colors.grey[400],
                               checkboxShape: CircleBorder(),
                               side: BorderSide(
-                                  color: Colors.grey,
+                                  color: index.isEven
+                                      ? Color.fromRGBO(58, 180, 242, 1)
+                                      : Color.fromRGBO(246, 55, 236, 1),
                                   width: 2.0,
                                   style: BorderStyle.solid),
                               value: todos[index]
@@ -168,7 +223,8 @@ class _HomeState extends State<Home> {
           await _dialogBuilder(
               context: context,
               todoController: todoController,
-              action: () => addNewTodo());
+              action: addNewTodo,
+              mode: 'add');
         },
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
@@ -180,11 +236,8 @@ class _HomeState extends State<Home> {
 Future<void> _dialogBuilder(
     {required BuildContext context,
     TextEditingController? todoController,
-    action}) async {
-  String task;
-
-  final test;
-
+    required Function action,
+    required String mode}) async {
   return await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -208,7 +261,10 @@ Future<void> _dialogBuilder(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text("Add new todos"),
+                    Text(
+                      mode == 'add' ? "Add new todo" : "Edit todo",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     Padding(
                       padding: EdgeInsets.all(8.0),
                       child: customTextField(
@@ -216,16 +272,20 @@ Future<void> _dialogBuilder(
                           inputType: TextInputType.text,
                           inputController: todoController),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: RaisedButton(
-                        child: Text("Add"),
-                        onPressed: () async {
-                          await action();
-                          Navigator.pop(context);
-                        },
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () => action(),
+                        style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7),
+                            ),
+                            padding: EdgeInsets.all(12)),
+                        child: Text(
+                          mode == 'add' ? 'Add' : 'Edit',
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
