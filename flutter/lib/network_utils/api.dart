@@ -54,4 +54,8 @@ class Network {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
       };
+
+  logout() async {
+    await storage.deleteAll();
+  }
 }

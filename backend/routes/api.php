@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\TodoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/todo/{author}', [TodoController::class, 'index']);
+    Route::post('/createTodo', [TodoController::class, 'store']);
+    Route::put('/updateTodo/{id}', [TodoController::class, 'update']);
+    Route::delete('/deleteTodo/{id}', [TodoController::class, 'destroy']);
 });
+// Route::middleware('auth:sanctum')->post('/createTodo', [TodoController::class, 'store']);
 
 Route::controller(RegisterController::class)->group(function () {
     Route::post('register', 'register');

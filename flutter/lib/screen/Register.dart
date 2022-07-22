@@ -83,7 +83,7 @@ class _RegisterState extends State<Register> {
                 children: [
                   Text('Already have an account?'),
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, '/login'),
+                    onTap: () => Navigator.popAndPushNamed(context, '/login'),
                     child: Text(
                       ' Log In',
                       style: TextStyle(color: Colors.blue),

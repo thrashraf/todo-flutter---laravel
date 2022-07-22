@@ -18,7 +18,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Map user = {};
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   List todos = [
     {'title': 'lol', 'isCheck': true},
@@ -61,9 +60,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: NavBar(),
+      drawer: Navbar(),
       appBar: AppBar(
-        
         title: Text('test'),
         backgroundColor: Colors.white,
         elevation: 0,

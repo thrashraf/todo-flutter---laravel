@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:task/network_utils/api.dart';
+import 'package:task/screen/Home.dart';
 import 'package:task/widgets/custom_passwordField.dart';
 import '../widgets/custom_textField.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -35,6 +36,11 @@ class _LoginState extends State<Login> {
 
       try {
         await Network().authData(data, 'requestToken');
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => Home()),
+          (Route<dynamic> route) => false,
+        );
       } catch (e) {
         print(e);
       }
@@ -165,7 +171,8 @@ class _LoginState extends State<Login> {
                   children: [
                     Text('Not a member?'),
                     GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, '/register'),
+                      onTap: () =>
+                          Navigator.popAndPushNamed(context, '/register'),
                       child: Text(
                         ' Register now',
                         style: TextStyle(color: Colors.blue),
