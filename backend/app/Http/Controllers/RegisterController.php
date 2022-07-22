@@ -63,4 +63,9 @@ class RegisterController extends BaseController
         // Returning response
         return response()->json($this->getUserAndToken($user, $request->device_name));
     }
+
+    protected function logout(Request $request, User $user)
+    {
+        $request->user()->currentAccessToken()->delete();
+    }
 }

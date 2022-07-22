@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/createTodo', [TodoController::class, 'store']);
     Route::put('/updateTodo/{id}', [TodoController::class, 'update']);
     Route::delete('/deleteTodo/{id}', [TodoController::class, 'destroy']);
+    Route::delete('/logout', [RegisterController::class, 'logout']);
 });
 // Route::middleware('auth:sanctum')->post('/createTodo', [TodoController::class, 'store']);
 
