@@ -1,13 +1,17 @@
 import 'dart:convert';
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
+import 'package:task/Models/Todo.dart';
 import 'package:task/network_utils/api.dart';
+import 'package:task/providers/TodoProviders.dart';
+import 'package:task/screen/Loading.dart';
+import 'package:task/widgets/CardTodo.dart';
 import 'package:task/widgets/Navbar.dart';
 import 'package:task/widgets/custom_textField.dart';
+
+import '../widgets/Skeleton.dart';
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
@@ -18,12 +22,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Map user = {};
-
-  List todos = [
-    {'title': 'lol', 'isCheck': true},
-    {'title': 'lol 2', 'isCheck': true},
-    {'title': 'lol 3', 'isCheck': true}
-  ];
+  bool isLoading = true;
+  List todos = [];
 
   TextEditingController todoController = TextEditingController();
 
@@ -32,9 +32,14 @@ class _HomeState extends State<Home> {
     // TODO: implement initState
     super.initState();
 
-    Network().getUserName('_user').then((value) {
+    Network().getUserName('_user').then((userData) {
       setState(() {
-        user = jsonDecode(value!);
+        user = jsonDecode(userData!);
+      });
+      Network().getData('todo/${user["id"]}').then((todo) {
+        setState(() {
+          print(todo);
+        });
       });
     });
   }
@@ -56,8 +61,31 @@ class _HomeState extends State<Home> {
     });
   }
 
+  checkTodo(index) {
+    bool intToBool(int a) => a == 0 ? false : true;
+
+    bool isCheck = intToBool(todos[index]["isCheck"]);
+    setState(() {
+      todos[index]["isCheck"] = isCheck ? 0 : 1;
+    });
+  }
+
+  showEditDialog(index) => _dialogBuilder(
+      context: context,
+      todoController: todoController,
+      action: () => editTodo(index),
+      mode: 'edit');
+
+  deleteTodo(index) {
+    setState(() {
+      todos.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final List todos = context.watch<TodoProviders>().todos;
+
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: Navbar(),
@@ -83,135 +111,42 @@ class _HomeState extends State<Home> {
           child: SingleChildScrollView(
             child: Container(
               width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     IconButton(
-                  //       icon: Icon(
-                  //         Icons.menu,
-                  //         color: Colors.grey[500],
-                  //       ),
-                  //       onPressed: () {
-                  //         () => Scaffold.of(context).openDrawer();
-                  //       },
-                  //     ),
-                  //     Row(
-                  //       children: [
-                  //         Icon(
-                  //           Icons.search_outlined,
-                  //           color: Colors.grey[500],
-                  //         ),
-                  //         SizedBox(width: 30),
-                  //         Icon(
-                  //           Icons.notifications_outlined,
-                  //           color: Colors.grey[500],
-                  //         ),
-                  //       ],
-                  //     )
-                  //   ],
-                  // ),
-                  // const SizedBox(
-                  //   height: 50,
-                  // ),
-                  Text(
-                    "What's up ${user["name"]}!",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                  // FloatingActionButton(
-                  //   onPressed: () {},
-                  //   child: Text('+'),
-                  // )
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Text(
-                    "TODAY'S TASK",
-                    style: TextStyle(
-                        letterSpacing: 3,
-                        color: Colors.grey[700],
-                        fontSize: 12),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: todos.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                          child: Slidable(
-                            key: UniqueKey(),
-                            endActionPane: ActionPane(
-                              motion: DrawerMotion(),
-                              children: [
-                                SlidableAction(
-                                  // An action can be bigger than the others.
-                                  backgroundColor: Colors.blue,
-                                  foregroundColor: Colors.white,
-                                  icon: Icons.edit,
-                                  label: 'Edit',
-                                  onPressed: (BuildContext context) {
-                                    _dialogBuilder(
-                                        context: context,
-                                        todoController: todoController,
-                                        action: () => editTodo(index),
-                                        mode: 'edit');
-                                  },
-                                ),
-                                SlidableAction(
-                                  backgroundColor: Colors.red,
-                                  foregroundColor: Colors.white,
-                                  icon: Icons.delete,
-                                  borderRadius: const BorderRadius.only(
-                                      topRight: Radius.circular(10),
-                                      bottomRight: Radius.circular(10)),
-                                  label: 'Delete',
-                                  onPressed: (BuildContext context) {
-                                    setState(() {
-                                      todos.removeAt(index);
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                            child: CheckboxListTile(
-                              contentPadding: const EdgeInsets.all(7),
-                              title: Text(
-                                todos[index]["title"],
-                                style: TextStyle(
-                                    decoration: todos[index]["isCheck"]
-                                        ? TextDecoration.lineThrough
-                                        : null,
-                                    fontSize: 20),
-                              ),
-                              controlAffinity: ListTileControlAffinity.leading,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  todos[index]["isCheck"] =
-                                      !todos[index]["isCheck"];
-                                });
-                              },
-                              activeColor: Colors.grey[400],
-                              checkboxShape: CircleBorder(),
-                              side: BorderSide(
-                                  color: index.isEven
-                                      ? Color.fromRGBO(58, 180, 242, 1)
-                                      : Color.fromRGBO(246, 55, 236, 1),
-                                  width: 2.0,
-                                  style: BorderStyle.solid),
-                              value: todos[index]
-                                  ["isCheck"], //  <-- leading Checkbox
-                            ),
-                          ),
-                        );
-                      }),
-                ],
-              ),
+              child: isLoading
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "What's up ${user["name"]}!",
+                          style: const TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        Text(
+                          ("${context.watch<TodoProviders>().count}"),
+                          style: TextStyle(
+                              letterSpacing: 3,
+                              color: Colors.grey[700],
+                              fontSize: 12),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: todos.length,
+                          itemBuilder: (context, index) {
+                            return CardTodo(
+                              todo: todos[index],
+                              index: index,
+                            );
+                          },
+                        )
+                      ],
+                    )
+                  : Loading(),
             ),
           ),
         )),
