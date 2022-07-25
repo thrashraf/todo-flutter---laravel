@@ -56,9 +56,10 @@ class _Navbar extends State<Navbar> {
             leading: Icon(Icons.exit_to_app_outlined),
             title: const Text('Logout'),
             onTap: () async {
-              await Network().logout();
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  '/login', (Route<dynamic> route) => false);
+              await Network().logout('logout').then((res) {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/login', (Route<dynamic> route) => false);
+              });
             },
           ),
         ],

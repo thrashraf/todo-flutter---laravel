@@ -8,6 +8,7 @@ import 'package:task/network_utils/api.dart';
 import 'package:task/providers/TodoProviders.dart';
 import 'package:task/screen/Loading.dart';
 import 'package:task/widgets/CardTodo.dart';
+import 'package:task/widgets/Dialog.dart';
 import 'package:task/widgets/Navbar.dart';
 import 'package:task/widgets/custom_textField.dart';
 
@@ -22,7 +23,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Map user = {};
-  bool isLoading = true;
+  bool isLoading = false;
   List todos = [];
 
   TextEditingController todoController = TextEditingController();
@@ -36,55 +37,26 @@ class _HomeState extends State<Home> {
       setState(() {
         user = jsonDecode(userData!);
       });
-      Network().getData('todo/${user["id"]}').then((todo) {
+      Network().getData('todo/${user["id"]}').then((todoData) {
+        print(todoData);
+        List todos = todoData["todos"];
+
+        todos.forEach((todo) {
+          Provider.of<TodoProviders>(context, listen: false).getTodo(Todo(
+              task: todo['task'], isCheck: todo['isCheck'], id: todo["id"]));
+        });
         setState(() {
-          print(todo);
+          isLoading = true;
         });
       });
-    });
-  }
-
-  addNewTodo() {
-    setState(() {
-      todos.add({'title': todoController.text, 'isCheck': false});
-      todoController.text = '';
-    });
-  }
-
-  editTodo(index) {
-    var data = todos.elementAt(index);
-
-    setState(() {
-      data["title"] = todoController.text;
-      data["isCheck"] = todos[index]["isCheck"];
-      todoController.text = '';
-    });
-  }
-
-  checkTodo(index) {
-    bool intToBool(int a) => a == 0 ? false : true;
-
-    bool isCheck = intToBool(todos[index]["isCheck"]);
-    setState(() {
-      todos[index]["isCheck"] = isCheck ? 0 : 1;
-    });
-  }
-
-  showEditDialog(index) => _dialogBuilder(
-      context: context,
-      todoController: todoController,
-      action: () => editTodo(index),
-      mode: 'edit');
-
-  deleteTodo(index) {
-    setState(() {
-      todos.removeAt(index);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final List todos = context.watch<TodoProviders>().todos;
+
+    final Todo newTodo = Todo(task: todoController.text, isCheck: 0);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -125,7 +97,7 @@ class _HomeState extends State<Home> {
                           height: 40,
                         ),
                         Text(
-                          ("${context.watch<TodoProviders>().count}"),
+                          ("TODAY TASK"),
                           style: TextStyle(
                               letterSpacing: 3,
                               color: Colors.grey[700],
@@ -136,94 +108,33 @@ class _HomeState extends State<Home> {
                         ),
                         ListView.builder(
                           shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: todos.length,
                           itemBuilder: (context, index) {
                             return CardTodo(
-                              todo: todos[index],
-                              index: index,
-                            );
+                                todo: todos[index],
+                                index: index,
+                                todoController: todoController,
+                                newTodo: newTodo);
                           },
                         )
                       ],
                     )
-                  : Loading(),
+                  : const Loading(),
             ),
           ),
         )),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await _dialogBuilder(
-              context: context,
-              todoController: todoController,
-              action: addNewTodo,
-              mode: 'add');
-        },
+        onPressed: () => showDialog(
+            builder: (context) => DialogWidget(
+                  mode: 'add',
+                  todo: Todo(task: '', isCheck: 0),
+                ),
+            context: context),
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
       ),
     );
   }
-}
-
-Future<void> _dialogBuilder(
-    {required BuildContext context,
-    TextEditingController? todoController,
-    required Function action,
-    required String mode}) async {
-  return await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Stack(
-            children: <Widget>[
-              Positioned(
-                right: -40.0,
-                top: -40.0,
-                child: InkResponse(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: CircleAvatar(
-                    child: Icon(Icons.close),
-                    backgroundColor: Colors.red,
-                  ),
-                ),
-              ),
-              Form(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      mode == 'add' ? "Add new todo" : "Edit todo",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: customTextField(
-                          placeholder: 'todos',
-                          inputType: TextInputType.text,
-                          inputController: todoController),
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () => action(),
-                        style: OutlinedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(7),
-                            ),
-                            padding: EdgeInsets.all(12)),
-                        child: Text(
-                          mode == 'add' ? 'Add' : 'Edit',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      });
 }

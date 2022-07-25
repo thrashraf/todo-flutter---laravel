@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 
 class Todo {
   late String task;
-  late bool isCheck;
+  late int isCheck;
+  int? id;
 
-  Todo({required this.task, required this.isCheck});
+  Todo({required this.task, required this.isCheck, this.id});
 
-  void toggleIsCheck() {
-    isCheck = !isCheck;
+  intToBool() {
+    return isCheck != 1 ? false : true;
   }
 
-  bool intToBool(int a) => a == 0 ? false : true;
+  toggleIsCheck() {
+    isCheck = isCheck == 0 ? 1 : 0;
+  }
 }

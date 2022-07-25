@@ -30,10 +30,10 @@ class RegisterController extends BaseController
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        $success['token'] =  $user->createToken('MyApp')->plainTextToken;
-        $success['name'] =  $user->name;
+        // $success['token'] =  $user->createToken('MyApp')->plainTextToken;
+        // $success['name'] =  $user->name;
 
-        return $this->sendResponse($success, 'User register successfully.');
+        return $this->sendResponse(null, 'User register successfully.');
     }
 
     /**
@@ -67,5 +67,7 @@ class RegisterController extends BaseController
     protected function logout(Request $request, User $user)
     {
         $request->user()->currentAccessToken()->delete();
+
+        return $this->sendRespond(null, 'Successful');
     }
 }

@@ -38,14 +38,6 @@ class _LoginState extends State<Login> {
 
       try {
         var respond = await Network().authData(data, 'requestToken');
-        print(respond['User']);
-        User userData = User(
-            id: respond["User"]["id"],
-            name: respond["User"]["name"],
-            email: respond["User"]["email"],
-            token: respond["Access-Token"]);
-        print(userData);
-        Provider.of<UserProvider>(context, listen: false).addUser(userData);
 
         Navigator.pushAndRemoveUntil(
           context,

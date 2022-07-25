@@ -2,19 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:task/providers/TodoProviders.dart';
+import 'package:task/widgets/Dialog.dart';
 
 import '../Models/Todo.dart';
 
 class CardTodo extends StatelessWidget {
   late Todo todo;
   late int index;
+  late TextEditingController todoController;
+  late Todo newTodo;
 
-  CardTodo({required this.todo, required this.index});
+  CardTodo(
+      {required this.todo,
+      required this.index,
+      required this.todoController,
+      required this.newTodo});
 
   @override
   Widget build(BuildContext context) {
     bool intToBool(int a) => a == 0 ? false : true;
-    print(this.todo);
     return Container(
       margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: Slidable(
@@ -23,12 +29,18 @@ class CardTodo extends StatelessWidget {
           motion: DrawerMotion(),
           children: [
             SlidableAction(
-                // An action can be bigger than the others.
-                backgroundColor: Colors.blue,
-                foregroundColor: Colors.white,
-                icon: Icons.edit,
-                label: 'Edit',
-                onPressed: (BuildContext context) {}),
+              // An action can be bigger than the others.
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              icon: Icons.edit,
+              label: 'Edit',
+              onPressed: (BuildContext context) => showDialog(
+                  builder: (context) => DialogWidget(
+                        mode: 'edit',
+                        todo: todo,
+                      ),
+                  context: context),
+            ),
             SlidableAction(
                 backgroundColor: Colors.red,
                 foregroundColor: Colors.white,
@@ -47,7 +59,8 @@ class CardTodo extends StatelessWidget {
             title: Text(
               todo.task,
               style: TextStyle(
-                  decoration: todo.isCheck ? TextDecoration.lineThrough : null,
+                  decoration:
+                      todo.intToBool() ? TextDecoration.lineThrough : null,
                   fontSize: 20),
             ),
             controlAffinity: ListTileControlAffinity.leading,
@@ -63,7 +76,7 @@ class CardTodo extends StatelessWidget {
                     : Color.fromRGBO(246, 55, 236, 1),
                 width: 2.0,
                 style: BorderStyle.solid),
-            value: todo.isCheck //  <-- leading Checkbox
+            value: todo.intToBool() //  <-- leading Checkbox
             ),
       ),
     );

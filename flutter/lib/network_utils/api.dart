@@ -1,12 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:task/Models/User.dart';
 
 class Network {
   final String _url = 'http://192.168.0.107:8000/api/';
   final storage = new FlutterSecureStorage();
-  //if you are using android studio emulator, change localhost to 10.0.2.2
 
   _storeValue(key, value) async {
     await storage.write(key: key, value: value);
@@ -43,15 +42,55 @@ class Network {
       var respond =
           await http.get(Uri.parse(fullUrl), headers: await _setHeaders());
 
-      print(respond.statusCode);
       var data = jsonDecode(respond.body);
+      print(respond.statusCode);
       if (respond.statusCode != 200) {
-        return Future.error('FooError');
+        return Future.error('Something went wrong');
       }
 
       return data;
     } catch (e) {
       print(e);
+    }
+  }
+
+  createTodo(apiUrl, newData) async {
+    dynamic fullUrl = _url + apiUrl;
+    try {
+      var respond = await http.post(Uri.parse(fullUrl),
+          headers: await _setHeaders(), body: jsonEncode(newData));
+      print(fullUrl);
+      var data = jsonDecode(respond.body);
+
+      return data;
+    } catch (e) {
+      return Future.error('Something went wrong');
+    }
+  }
+
+  updateTodo(apiUrl, newData) async {
+    dynamic fullUrl = _url + apiUrl;
+    try {
+      var respond = await http.put(Uri.parse(fullUrl),
+          headers: await _setHeaders(), body: jsonEncode(newData));
+      var data = jsonDecode(respond.body);
+
+      return data;
+    } catch (e) {
+      return Future.error('Something went wrong');
+    }
+  }
+
+  delete(apiUrl) async {
+    dynamic fullUrl = _url + apiUrl;
+    try {
+      var respond =
+          await http.delete(Uri.parse(fullUrl), headers: await _setHeaders());
+      var data = jsonDecode(respond.body);
+
+      return data;
+    } catch (e) {
+      return Future.error('Something went wrong');
     }
   }
 
@@ -66,7 +105,35 @@ class Network {
     };
   }
 
-  logout() async {
-    await storage.deleteAll();
+  logout(apiUrl) async {
+    dynamic fullUrl = _url + apiUrl;
+    try {
+      var respond =
+          await http.delete(Uri.parse(fullUrl), headers: await _setHeaders());
+      var data = jsonDecode(respond.body);
+
+      await storage.deleteAll();
+
+      return data;
+    } catch (e) {
+      return Future.error('Something went wrong');
+    }
+  }
+
+  register(apiUrl, newData) async {
+    dynamic fullUrl = _url + apiUrl;
+    print(fullUrl);
+    try {
+      var respond = await http.post(Uri.parse(fullUrl), body: newData);
+
+      print(respond.statusCode);
+      var data = jsonDecode(respond.body);
+
+      await storage.deleteAll();
+
+      return respond;
+    } catch (e) {
+      return Future.error(e);
+    }
   }
 }

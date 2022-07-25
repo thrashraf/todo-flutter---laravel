@@ -27,24 +27,37 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var isLoggedIn;
+  late Future? isLoggedIn;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Network().getUserName('_token').then((token) {
-      setState(() {
-        isLoggedIn = token;
-        print('token: $isLoggedIn');
-      });
+    // isLoggedIn = getToken();
+    // print(isLoggedIn);
+  }
+
+  Future? getToken() {
+    return Network().getUserName('_token').then((token) {
+      return token;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: isLoggedIn != null ? Home() : Login(),
+      //home: isLoggedIn != null ? Home() : Login(),
+      home: FutureBuilder(
+          future: getToken(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            print('main: ${snapshot.data}');
+            if (snapshot.hasData) {
+              return Home();
+            } else {
+              return Login();
+            }
+          }),
+
       //? this is the routes
       routes: {
         '/home': (context) => Home(),
