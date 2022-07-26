@@ -20,7 +20,6 @@ class CardTodo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool intToBool(int a) => a == 0 ? false : true;
     return Container(
       margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: Slidable(
@@ -66,7 +65,7 @@ class CardTodo extends StatelessWidget {
             controlAffinity: ListTileControlAffinity.leading,
             onChanged: (bool? value) {
               Provider.of<TodoProviders>(context, listen: false)
-                  .checkTodo(index);
+                  .checkTodo(index, todo.id, todo.task);
             },
             activeColor: Colors.grey[400],
             checkboxShape: CircleBorder(),

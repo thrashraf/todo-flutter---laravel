@@ -1,10 +1,14 @@
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:task/Models/User.dart';
+import 'package:task/providers/TodoProviders.dart';
+
+import '../Models/Todo.dart';
 
 class Network {
-  final String _url = 'http://192.168.0.107:8000/api/';
+  final String _url = 'http://192.168.0.107:8000/api';
   final storage = new FlutterSecureStorage();
 
   _storeValue(key, value) async {
@@ -17,80 +21,68 @@ class Network {
     return value;
   }
 
-  authData(data, endpoint) async {
-    dynamic fullUrl = _url + endpoint;
-    var response = await http.post(Uri.parse(fullUrl), body: data);
-
-    var respondedData = jsonDecode(response.body);
+  Future requestLogin(data) async {
+    final response =
+        await http.post(Uri.parse('$_url/requestToken'), body: data);
 
     if (response.statusCode == 200) {
-      String token = respondedData["Access-Token"];
+      var data = jsonDecode(response.body);
 
-      await _storeValue('_token', token);
-      await _storeValue('_user', json.encode(respondedData["User"]));
+      //? store token value
+      await _storeValue('_token', data["Access-Token"]);
+      await _storeValue('_user', json.encode(data["User"]));
 
-      token = getUserName('_token').toString();
-
-      return respondedData;
+      return data;
+    } else {
+      throw Exception('Something went wrong 🤔');
     }
   }
 
-  getData(apiUrl) async {
-    dynamic fullUrl = _url + apiUrl;
+  Future requestTodo(id) async {
+    final response = await http.get(Uri.parse('$_url/todo/$id'),
+        headers: await _setHeaders());
 
-    try {
-      var respond =
-          await http.get(Uri.parse(fullUrl), headers: await _setHeaders());
+    print(response.statusCode);
 
-      var data = jsonDecode(respond.body);
-      print(respond.statusCode);
-      if (respond.statusCode != 200) {
-        return Future.error('Something went wrong');
-      }
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
 
-      return data;
-    } catch (e) {
-      print(e);
+      return data["todos"];
+    } else {
+      throw Exception('Something went wrong');
     }
   }
 
-  createTodo(apiUrl, newData) async {
-    dynamic fullUrl = _url + apiUrl;
-    try {
-      var respond = await http.post(Uri.parse(fullUrl),
-          headers: await _setHeaders(), body: jsonEncode(newData));
-      print(fullUrl);
-      var data = jsonDecode(respond.body);
+  Future createTodo(newData) async {
+    final response = await http.post(Uri.parse('$_url/createTodo'),
+        headers: await _setHeaders(), body: jsonEncode(newData));
 
-      return data;
-    } catch (e) {
-      return Future.error('Something went wrong');
+    if (response.statusCode == 200) {
+      return response;
+    } else {
+      throw Exception('Something went wrong');
     }
   }
 
-  updateTodo(apiUrl, newData) async {
-    dynamic fullUrl = _url + apiUrl;
-    try {
-      var respond = await http.put(Uri.parse(fullUrl),
-          headers: await _setHeaders(), body: jsonEncode(newData));
-      var data = jsonDecode(respond.body);
-
-      return data;
-    } catch (e) {
-      return Future.error('Something went wrong');
+  Future updateTodo(id, newData) async {
+    final response = await http.put(Uri.parse('$_url/updateTodo/$id'),
+        headers: await _setHeaders(), body: jsonEncode(newData));
+    print(response.body);
+    if (response.statusCode == 200) {
+      return response;
+    } else {
+      throw Exception('Something went wrong');
     }
   }
 
-  delete(apiUrl) async {
-    dynamic fullUrl = _url + apiUrl;
-    try {
-      var respond =
-          await http.delete(Uri.parse(fullUrl), headers: await _setHeaders());
-      var data = jsonDecode(respond.body);
-
-      return data;
-    } catch (e) {
-      return Future.error('Something went wrong');
+  Future delete(id) async {
+    final response = await http.delete(Uri.parse('$_url/deleteTodo/$id'),
+        headers: await _setHeaders());
+    print(response.body);
+    if (response.statusCode == 200) {
+      return response;
+    } else {
+      throw Exception('Something went wrong');
     }
   }
 
@@ -105,35 +97,25 @@ class Network {
     };
   }
 
-  logout(apiUrl) async {
-    dynamic fullUrl = _url + apiUrl;
-    try {
-      var respond =
-          await http.delete(Uri.parse(fullUrl), headers: await _setHeaders());
-      var data = jsonDecode(respond.body);
-
+  Future logout() async {
+    final response = await http.delete(Uri.parse('$_url/logout'),
+        headers: await _setHeaders());
+    if (response.statusCode == 200) {
       await storage.deleteAll();
-
-      return data;
-    } catch (e) {
-      return Future.error('Something went wrong');
+      return response;
+    } else {
+      throw Exception('Something went wrong');
     }
   }
 
-  register(apiUrl, newData) async {
-    dynamic fullUrl = _url + apiUrl;
-    print(fullUrl);
-    try {
-      var respond = await http.post(Uri.parse(fullUrl), body: newData);
+  Future register(data) async {
+    final response = await http.post(Uri.parse('$_url/register'),
+        headers: await _setHeaders(), body: jsonEncode(data));
 
-      print(respond.statusCode);
-      var data = jsonDecode(respond.body);
-
-      await storage.deleteAll();
-
-      return respond;
-    } catch (e) {
-      return Future.error(e);
+    if (response.statusCode == 200) {
+      return response;
+    } else {
+      throw Exception('Something went wrong');
     }
   }
 }

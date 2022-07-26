@@ -37,7 +37,7 @@ class _LoginState extends State<Login> {
       };
 
       try {
-        var respond = await Network().authData(data, 'requestToken');
+        var respond = await Network().requestLogin(data);
 
         Navigator.pushAndRemoveUntil(
           context,

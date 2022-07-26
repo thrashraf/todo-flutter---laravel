@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task/providers/TodoProviders.dart';
 
 import '../network_utils/api.dart';
 
@@ -56,7 +58,8 @@ class _Navbar extends State<Navbar> {
             leading: Icon(Icons.exit_to_app_outlined),
             title: const Text('Logout'),
             onTap: () async {
-              await Network().logout('logout').then((res) {
+              await Network().logout().then((res) {
+                Provider.of<TodoProviders>(context, listen: false).todos = [];
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     '/login', (Route<dynamic> route) => false);
               });

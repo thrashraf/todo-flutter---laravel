@@ -35,7 +35,7 @@ class _DialogState extends State<DialogWidget> {
 Widget Form({required mode, required context, required editTodo}) {
   final title = TextEditingController();
   final provider = Provider.of<TodoProviders>(context, listen: false);
-  late Todo newTodo = Todo(task: title.text, isCheck: 0);
+  late Todo newTodo = Todo(id: editTodo.id, task: title.text, isCheck: 0);
   return Column(
     children: [
       Padding(

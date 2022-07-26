@@ -14,4 +14,12 @@ class Todo {
   toggleIsCheck() {
     isCheck = isCheck == 0 ? 1 : 0;
   }
+
+  factory Todo.fromJson(Map<String, dynamic> json) {
+    return Todo(
+      id: json['id'],
+      task: json['task'],
+      isCheck: json['isCheck'],
+    );
+  }
 }

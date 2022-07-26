@@ -84,7 +84,7 @@ class _RegisterState extends State<Register> {
                         'c_password': confPasswordController.text
                       };
 
-                      Network().register('register', data).then((res) {
+                      Network().register(data).then((res) {
                         print(res);
                         if (res.statusCode == 200) {
                           Navigator.popAndPushNamed(context, '/login');

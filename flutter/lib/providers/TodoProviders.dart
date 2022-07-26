@@ -6,7 +6,7 @@ import 'dart:collection';
 import 'package:task/network_utils/api.dart';
 
 class TodoProviders extends ChangeNotifier {
-  final List<Todo> todos = [];
+  List<Todo> todos = [];
 
   int _count = 1;
   int get count => _count;
@@ -18,7 +18,7 @@ class TodoProviders extends ChangeNotifier {
     Map userData = jsonDecode(user);
     Map data = {'task': todo.task, 'user_id': userData["id"]};
     print(data);
-    Network().createTodo('createTodo', data).then((data) {
+    Network().createTodo(data).then((data) {
       todos.add(todo);
       notifyListeners();
     });
@@ -29,24 +29,30 @@ class TodoProviders extends ChangeNotifier {
     notifyListeners();
   }
 
-  editTodo(Todo oldTodo, Todo newTodo) {
+  editTodo(Todo oldTodo, newTodo) {
     int index = todos.indexOf(oldTodo);
 
-    Network().updateTodo('updateTodo/${index}',
-        {'task': newTodo.task, 'isCheck': newTodo.isCheck}).then((res) {
+    var updatedTodo = {'task': newTodo.task, 'isCheck': newTodo.isCheck};
+
+    Network().updateTodo(oldTodo.id, updatedTodo).then((res) {
+      print(newTodo.runtimeType);
       todos[index] = newTodo;
       notifyListeners();
     });
   }
 
-  checkTodo(index) {
-    todos[index].toggleIsCheck();
-    print(todos[0].isCheck);
-    notifyListeners();
+  checkTodo(index, id, task) {
+    print(id);
+    var updatedTodo = {'task': task, 'isCheck': 1};
+    Network().updateTodo(id, updatedTodo).then((res) {
+      todos[index].toggleIsCheck();
+      print(todos[0].isCheck);
+      notifyListeners();
+    });
   }
 
   deleteTodo(Todo todo) async {
-    Network().delete('deleteTodo/${todo.id}').then((res) {
+    Network().delete(todo.id).then((res) {
       print(todo.id);
       todos.remove(todo);
       notifyListeners();
