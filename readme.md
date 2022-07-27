@@ -17,4 +17,9 @@ This app is just basic todo app that **can perform crud**. I build this app is f
 2.  open this folder in your favourite IDE
 3.  open terminal
 4.  to run flutter, execute this command `cd flutter/` and `flutter run`. make sure you already install flutter on your machine 😉
-5.  to start the server, `cd backend/` and `php artisan serve`. if you using real device to execute flutter run this command `php artisan serve --host 0.0.0.0`. and replace your IP Address to make request.
+5.  to start the server, `cd backend/` and `php artisan serve`. if you using scrcpy real device to execute flutter, run this command `php artisan serve --host 0.0.0.0`. and replace your IP Address to make request.
+
+### Features I hope to implement in the future.
+
+1. Add google authentication.
+2. Add reminder and push notification.
