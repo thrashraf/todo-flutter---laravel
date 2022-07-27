@@ -69,6 +69,8 @@ Widget form({required mode, required context, required editTodo}) {
                 } else {
                   provider.addNewTodo(newTodo);
                 }
+
+                Navigator.pop(context);
               }
             },
             style: OutlinedButton.styleFrom(

@@ -40,9 +40,9 @@ class TodoController extends BaseController
             return $this->sendError("todos can't be null");
         }
         $input = $request->all();
-        Todo::create($input);
+        $newTodo = Todo::create($input);
 
-        return $this->sendResponse(null, 'Successful create todos!');
+        return $this->sendResponse($newTodo, 'Successful create todos!');
     }
 
     /**

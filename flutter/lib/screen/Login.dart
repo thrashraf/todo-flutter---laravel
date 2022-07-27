@@ -51,7 +51,7 @@ class _LoginState extends State<Login> {
             textColor: Colors.white,
             fontSize: 16.0);
 
-        Navigator.popAndPushNamed(context, '/');
+        Navigator.popAndPushNamed(context, '/home');
       }
     }
 

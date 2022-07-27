@@ -53,8 +53,9 @@ class Network {
     final response = await http.post(Uri.parse('$_url/createTodo'),
         headers: await _setHeaders(), body: jsonEncode(newData));
 
+    var res = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      return response;
+      return res;
     } else {
       throw Exception('Something went wrong');
     }

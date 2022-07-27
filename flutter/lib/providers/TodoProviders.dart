@@ -19,7 +19,8 @@ class TodoProviders extends ChangeNotifier {
     Map data = {'task': todo.task, 'user_id': userData["id"]};
     print(data);
     Network().createTodo(data).then((data) {
-      todos.add(todo);
+      todos.add(
+          Todo(task: todo.task, isCheck: todo.isCheck, id: data["data"]["id"]));
       notifyListeners();
     });
   }
