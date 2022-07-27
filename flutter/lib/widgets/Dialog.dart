@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task/providers/TodoProviders.dart';
+import 'package:task/widgets/CustomFormField.dart';
 import '../Models/Todo.dart';
 import 'custom_textField.dart';
 
@@ -25,44 +26,60 @@ class _DialogState extends State<DialogWidget> {
             widget.mode == 'add' ? "Add new todo" : "Edit todo",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          Form(mode: widget.mode, context: context, editTodo: widget.todo)
+          form(
+            mode: widget.mode,
+            context: context,
+            editTodo: widget.todo,
+          )
         ],
       ),
     );
   }
 }
 
-Widget Form({required mode, required context, required editTodo}) {
+Widget form({required mode, required context, required editTodo}) {
   final title = TextEditingController();
   final provider = Provider.of<TodoProviders>(context, listen: false);
   late Todo newTodo = Todo(id: editTodo.id, task: title.text, isCheck: 0);
-  return Column(
-    children: [
-      Padding(
-        padding: EdgeInsets.all(8.0),
-        child: customTextField(
-            placeholder: 'todos',
-            inputType: TextInputType.text,
-            inputController: title),
-      ),
-      SizedBox(
-        width: double.infinity,
-        child: ElevatedButton(
-          onPressed: () {
-            if (mode != 'add') {
-              provider.editTodo(editTodo, newTodo);
-            } else {
-              provider.addNewTodo(newTodo);
-            }
-          },
-          style: OutlinedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(7),
-              ),
-              padding: EdgeInsets.all(12)),
-          child: Text('Saved'),
+
+  final _formKey = GlobalKey<FormState>();
+  return Form(
+    key: _formKey,
+    child: Column(
+      children: [
+        Padding(
+            padding: EdgeInsets.all(8.0),
+            child: CustomForm(
+                label: 'todos',
+                validation: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'please insert text';
+                  }
+                  return null;
+                },
+                isPassword: false,
+                textController: title)),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                if (mode != 'add') {
+                  provider.editTodo(editTodo, newTodo);
+                } else {
+                  provider.addNewTodo(newTodo);
+                }
+              }
+            },
+            style: OutlinedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7),
+                ),
+                padding: EdgeInsets.all(12)),
+            child: Text('Saved'),
+          ),
         ),
-      ),
-    ],
+      ],
+    ),
   );
 }
