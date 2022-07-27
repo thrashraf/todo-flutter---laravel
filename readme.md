@@ -9,7 +9,7 @@ This app is just basic todo app that **can perform crud**. I build this app is f
 
 ### Overview
 
-![alt image](./overview.png.jpg)
+![image info](./overview.png)
 
 ### How to install & run this project
 
