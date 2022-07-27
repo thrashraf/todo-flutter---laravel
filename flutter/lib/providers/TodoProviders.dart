@@ -24,7 +24,7 @@ class TodoProviders extends ChangeNotifier {
     });
   }
 
-  getTodo(Todo todo) {
+  getTodo(Todo todo) async {
     todos.add(todo);
     notifyListeners();
   }

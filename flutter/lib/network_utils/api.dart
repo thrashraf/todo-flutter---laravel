@@ -42,15 +42,11 @@ class Network {
     final response = await http.get(Uri.parse('$_url/todo/$id'),
         headers: await _setHeaders());
 
-    print(response.statusCode);
-
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-
-      return data["todos"];
-    } else {
-      throw Exception('Something went wrong');
+    if (response.statusCode != 200) {
+      throw HttpException('something went wrong');
     }
+    var data = jsonDecode(response.body);
+    return data["todos"];
   }
 
   Future createTodo(newData) async {

@@ -104,25 +104,27 @@ class _HomeState extends State<Home> {
           height: 40,
         ),
         Text(
-          ("TODAY TASK"),
+          (todos.isNotEmpty ? "TODAY TASK" : "PLAN YOUR DAY"),
           style: TextStyle(
               letterSpacing: 3, color: Colors.grey[700], fontSize: 12),
         ),
         const SizedBox(
           height: 20,
         ),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: todos.length,
-          itemBuilder: (context, index) {
-            return CardTodo(
-                todo: todos[index],
-                index: index,
-                todoController: todoController,
-                newTodo: newTodo);
-          },
-        )
+        todos.isEmpty
+            ? const Image(image: AssetImage('assets/todoEmpty.png'))
+            : ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: todos.length,
+                itemBuilder: (context, index) {
+                  return CardTodo(
+                      todo: todos[index],
+                      index: index,
+                      todoController: todoController,
+                      newTodo: newTodo);
+                },
+              )
       ],
     );
   }
