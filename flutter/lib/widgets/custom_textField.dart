@@ -25,9 +25,10 @@ class _customTextFieldState extends State<customTextField> {
           labelText: widget.placeholder,
           filled: true,
           fillColor: Colors.white,
-          contentPadding: EdgeInsets.all(20),
+          contentPadding: const EdgeInsets.all(20),
           enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent, width: 0.0),
+              borderSide:
+                  const BorderSide(color: Colors.transparent, width: 0.0),
               borderRadius: BorderRadius.circular(10)),
         ),
       ),

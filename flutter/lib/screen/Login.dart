@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -6,9 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:task/network_utils/api.dart';
 import 'package:task/screen/Home.dart';
+import 'package:task/widgets/CustomFormField.dart';
 import 'package:task/widgets/custom_passwordField.dart';
-import '../Models/User.dart';
-import '../providers/UserProviders.dart';
+import '../helpers/requestServer.dart';
 import '../widgets/custom_textField.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -24,6 +25,8 @@ class _LoginState extends State<Login> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     void _login() async {
@@ -36,16 +39,19 @@ class _LoginState extends State<Login> {
         'device_name': androidInfo.model
       };
 
-      try {
-        var respond = await Network().requestLogin(data);
+      var response = await requestServer((() => Network().requestLogin(data)));
 
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => Home()),
-          (Route<dynamic> route) => false,
-        );
-      } catch (e) {
-        print(e);
+      if (response != null) {
+        Fluttertoast.showToast(
+            msg: "Successful login! 🎉",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green[200],
+            textColor: Colors.white,
+            fontSize: 16.0);
+
+        Navigator.popAndPushNamed(context, '/');
       }
     }
 
@@ -60,62 +66,70 @@ class _LoginState extends State<Login> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Hello Again!',
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text("Welcome back you've ", style: TextStyle(fontSize: 20)),
-                SizedBox(
-                  height: 5,
-                ),
-                Text("been missed!", style: TextStyle(fontSize: 20)),
-                SizedBox(
-                  height: 50,
-                ),
-                customTextField(
-                  placeholder: 'Email',
-                  inputType: TextInputType.emailAddress,
-                  inputController: emailController,
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                passwordTextField(
-                    placeholder: 'Password',
-                    inputController: passwordController),
-                SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, '/register'),
-                  child: Text(
-                    'Forgot password?',
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () => _login(),
-                    child: Text(
-                      'Login',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    style: OutlinedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(7),
+                header(),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      CustomForm(
+                        label: 'Email',
+                        validation: (email) => EmailValidator.validate(email)
+                            ? null
+                            : "Invalid email address",
+                        isPassword: false,
+                        textController: emailController,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      CustomForm(
+                        label: 'Password',
+                        validation: (password) {
+                          if (password == null || password.isEmpty) {
+                            return 'please insert Name';
+                          }
+                          return null;
+                        },
+                        isPassword: true,
+                        textController: passwordController,
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.pushNamed(context, '/register'),
+                        child: const Text(
+                          'Forgot password?',
                         ),
-                        padding: EdgeInsets.all(12)),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _login();
+                            }
+                          },
+                          style: OutlinedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              padding: EdgeInsets.all(12)),
+                          child: const Text(
+                            'Login',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
-                  children: [
+                  children: const [
                     Expanded(
                         child: Divider(
                       thickness: 1,
@@ -136,7 +150,7 @@ class _LoginState extends State<Login> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 SizedBox(
@@ -157,8 +171,8 @@ class _LoginState extends State<Login> {
                                 width: 20,
                                 height: 40,
                               ), // <-- Use 'Image.asset(...)' here
-                              SizedBox(width: 12),
-                              Text(
+                              const SizedBox(width: 12),
+                              const Text(
                                 'Sign in with Google',
                                 style: TextStyle(fontWeight: FontWeight.w500),
                               ),
@@ -167,16 +181,16 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Wrap(
                   children: [
-                    Text('Not a member?'),
+                    const Text('Not a member?'),
                     GestureDetector(
                       onTap: () =>
                           Navigator.popAndPushNamed(context, '/register'),
-                      child: Text(
+                      child: const Text(
                         ' Register now',
                         style: TextStyle(color: Colors.blue),
                       ),
@@ -188,6 +202,29 @@ class _LoginState extends State<Login> {
           ),
         ),
       )),
+    );
+  }
+
+  //? Login header
+  Column header() {
+    return Column(
+      children: const [
+        Text(
+          'Hello Again!',
+          style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Text("Welcome back you've ", style: TextStyle(fontSize: 20)),
+        SizedBox(
+          height: 5,
+        ),
+        Text("been missed!", style: TextStyle(fontSize: 20)),
+        SizedBox(
+          height: 50,
+        ),
+      ],
     );
   }
 }

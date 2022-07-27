@@ -16,16 +16,23 @@ class RegisterController extends BaseController
      */
     public function register(Request $request)
     {
-        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+        // $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+        //     'name' => 'required',
+        //     'email' => 'required|email',
+        //     'password' => 'required',
+        //     'c_password' => 'required|same:password',
+        // ]);
+
+        $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
             'c_password' => 'required|same:password',
         ]);
 
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
+        // if ($validator->fails()) {
+        //     return $this->sendError('Validation Error.', $validator->errors());
+        // }
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
