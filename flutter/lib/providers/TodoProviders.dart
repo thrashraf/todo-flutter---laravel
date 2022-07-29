@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:task/Models/Todo.dart';
 import 'dart:collection';
 
-import 'package:task/network_utils/api.dart';
+import 'package:task/network_utils/Auth.dart';
+import 'package:task/network_utils/Todo.dart';
 
 class TodoProviders extends ChangeNotifier {
   List<Todo> todos = [];
@@ -14,11 +15,11 @@ class TodoProviders extends ChangeNotifier {
   UnmodifiableListView<Todo> get allTasks => UnmodifiableListView(todos);
 
   addNewTodo(Todo todo) async {
-    dynamic user = await Network().getUserName('_user');
+    dynamic user = await Auth().getLocalItem('_user');
     Map userData = jsonDecode(user);
     Map data = {'task': todo.task, 'user_id': userData["id"]};
     print(data);
-    Network().createTodo(data).then((data) {
+    TodoApi().createTodo(data).then((data) {
       todos.add(
           Todo(task: todo.task, isCheck: todo.isCheck, id: data["data"]["id"]));
       notifyListeners();
@@ -35,7 +36,7 @@ class TodoProviders extends ChangeNotifier {
 
     var updatedTodo = {'task': newTodo.task, 'isCheck': newTodo.isCheck};
 
-    Network().updateTodo(oldTodo.id, updatedTodo).then((res) {
+    TodoApi().updateTodo(oldTodo.id, updatedTodo).then((res) {
       print(newTodo.runtimeType);
       todos[index] = newTodo;
       notifyListeners();
@@ -45,7 +46,7 @@ class TodoProviders extends ChangeNotifier {
   checkTodo(index, id, task) {
     print(id);
     var updatedTodo = {'task': task, 'isCheck': 1};
-    Network().updateTodo(id, updatedTodo).then((res) {
+    TodoApi().updateTodo(id, updatedTodo).then((res) {
       todos[index].toggleIsCheck();
       print(todos[0].isCheck);
       notifyListeners();
@@ -53,7 +54,7 @@ class TodoProviders extends ChangeNotifier {
   }
 
   deleteTodo(Todo todo) async {
-    Network().delete(todo.id).then((res) {
+    TodoApi().delete(todo.id).then((res) {
       print(todo.id);
       todos.remove(todo);
       notifyListeners();

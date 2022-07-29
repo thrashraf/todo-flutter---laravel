@@ -2,9 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task/network_utils/Auth.dart';
 import 'package:task/providers/TodoProviders.dart';
-
-import '../network_utils/api.dart';
 
 class Navbar extends StatefulWidget {
   Navbar({Key? key}) : super(key: key);
@@ -19,7 +18,7 @@ class _Navbar extends State<Navbar> {
     // TODO: implement initState
     super.initState();
 
-    Network().getUserName('_user').then((value) {
+    Auth().getLocalItem('_user').then((value) {
       setState(() {
         user = jsonDecode(value!);
       });
@@ -46,7 +45,7 @@ class _Navbar extends State<Navbar> {
                 ),
               ),
             ),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.blue,
               image: DecorationImage(
                   fit: BoxFit.fill,
@@ -58,7 +57,7 @@ class _Navbar extends State<Navbar> {
             leading: Icon(Icons.exit_to_app_outlined),
             title: const Text('Logout'),
             onTap: () async {
-              await Network().logout().then((res) {
+              await Auth().logout().then((res) {
                 Provider.of<TodoProviders>(context, listen: false).todos = [];
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     '/login', (Route<dynamic> route) => false);

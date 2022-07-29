@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\BaseController;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\BaseController;
+use Laravel\Socialite\Facades\Socialite;
 
 class RegisterController extends BaseController
 {
@@ -70,6 +71,26 @@ class RegisterController extends BaseController
         // Returning response
         return response()->json($this->getUserAndToken($user, $request->device_name));
     }
+
+    protected function requestTokenGoogle(Request $request)
+    {
+        // Getting the user from socialite using token from google
+        $user = Socialite::driver('google')->stateless()->userFromToken($request->token);
+
+        // Getting or creating user from db
+        $userFromDb = User::firstOrCreate(
+            ['email' => $user->email],
+            [
+                'email_verified_at' => now(),
+                'name' => $user->name,
+                'status' => true,
+            ]
+        );
+
+        // Returning response
+        return response()->json($this->getUserAndToken($userFromDb, $request->device_name));
+    }
+
 
     protected function logout(Request $request)
     {

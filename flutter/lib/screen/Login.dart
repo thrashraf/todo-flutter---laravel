@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:email_validator/email_validator.dart';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:provider/provider.dart';
-import 'package:task/network_utils/api.dart';
+import 'package:task/network_utils/Auth.dart';
 import 'package:task/screen/Home.dart';
 import 'package:task/widgets/CustomFormField.dart';
 import 'package:task/widgets/custom_passwordField.dart';
@@ -39,7 +43,7 @@ class _LoginState extends State<Login> {
         'device_name': androidInfo.model
       };
 
-      var response = await requestServer((() => Network().requestLogin(data)));
+      var response = await requestServer((() => Auth().requestLogin(data)));
 
       if (response != null) {
         Fluttertoast.showToast(
@@ -156,7 +160,13 @@ class _LoginState extends State<Login> {
                 SizedBox(
                     width: double.infinity,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () async {
+                        bool req = await Auth().loginWithGoogle();
+
+                        if (req) {
+                          Navigator.popAndPushNamed(context, '/home');
+                        }
+                      },
                       child: Ink(
                         color: Colors.white,
                         child: Padding(

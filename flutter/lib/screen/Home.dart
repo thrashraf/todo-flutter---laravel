@@ -4,7 +4,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:task/Models/Todo.dart';
-import 'package:task/network_utils/api.dart';
+import 'package:task/network_utils/Auth.dart';
+import 'package:task/network_utils/Todo.dart';
 import 'package:task/providers/TodoProviders.dart';
 import 'package:task/screen/Loading.dart';
 import 'package:task/widgets/CardTodo.dart';
@@ -33,12 +34,12 @@ class _HomeState extends State<Home> {
     // TODO: implement initState
     super.initState();
 
-    Network().getUserName('_user').then((userData) {
+    Auth().getLocalItem('_user').then((userData) {
       setState(() {
         user = jsonDecode(userData!);
       });
       String id = user["id"].toString();
-      Network().requestTodo(id).then((todoData) {
+      TodoApi().requestTodo(id).then((todoData) {
         todoData.forEach((todo) {
           Provider.of<TodoProviders>(context, listen: false).getTodo(Todo(
               task: todo['task'], isCheck: todo['isCheck'], id: todo["id"]));

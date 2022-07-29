@@ -7,15 +7,21 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:device_info_plus_web/device_info_plus_web.dart';
+import 'package:firebase_auth_web/firebase_auth_web.dart';
+import 'package:firebase_core_web/firebase_core_web.dart';
 import 'package:flutter_secure_storage_web/flutter_secure_storage_web.dart';
 import 'package:fluttertoast/fluttertoast_web.dart';
+import 'package:google_sign_in_web/google_sign_in_web.dart';
 
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 // ignore: public_member_api_docs
 void registerPlugins(Registrar registrar) {
   DeviceInfoPlusPlugin.registerWith(registrar);
+  FirebaseAuthWeb.registerWith(registrar);
+  FirebaseCoreWeb.registerWith(registrar);
   FlutterSecureStorageWeb.registerWith(registrar);
   FluttertoastWebPlugin.registerWith(registrar);
+  GoogleSignInPlugin.registerWith(registrar);
   registrar.registerMessageHandler();
 }

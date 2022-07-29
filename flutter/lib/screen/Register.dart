@@ -8,7 +8,7 @@ import 'package:task/widgets/custom_passwordField.dart';
 import 'package:task/widgets/custom_textField.dart';
 
 import '../helpers/requestServer.dart';
-import '../network_utils/api.dart';
+import '../network_utils/Auth.dart';
 import '../widgets/CustomFormField.dart';
 
 class Register extends StatefulWidget {
@@ -36,7 +36,7 @@ class _RegisterState extends State<Register> {
       'c_password': confPasswordController.text
     };
 
-    var response = await requestServer((() => Network().register(data)));
+    var response = await requestServer((() => Auth().register(data)));
 
     if (response != null) {
       Fluttertoast.showToast(

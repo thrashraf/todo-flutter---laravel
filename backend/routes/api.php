@@ -29,3 +29,6 @@ Route::controller(RegisterController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('requestToken', 'requestToken');
 });
+
+
+Route::post('google', [RegisterController::class, 'requestTokenGoogle']);

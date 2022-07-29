@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:task/network_utils/api.dart';
+import 'package:task/network_utils/Auth.dart';
 import 'package:task/providers/TodoProviders.dart';
 import './screen/Home.dart';
 import './screen/Login.dart';
 import './screen/Register.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(
     MultiProvider(
       providers: [
@@ -38,7 +42,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future? getToken() {
-    return Network().getUserName('_token').then((token) {
+    return Auth().getLocalItem('_token').then((token) {
       return token;
     });
   }
