@@ -21,5 +21,5 @@ This app is just basic todo app that **can perform crud**. I build this app is f
 
 ### Features I hope to implement in the future.
 
-1. Add google authentication.
+1. ~~Add google authentication~~.
 2. Add reminder and push notification.
