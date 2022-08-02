@@ -8,6 +8,7 @@ firebase_auth=/home/ashraf/snap/flutter/common/flutter/.pub-cache/hosted/pub.dar
 firebase_auth_web=/home/ashraf/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-4.2.1/
 firebase_core=/home/ashraf/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-1.20.0/
 firebase_core_web=/home/ashraf/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.7.1/
+flutter_local_notifications=/home/ashraf/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-9.7.0/
 flutter_secure_storage=/home/ashraf/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_secure_storage-5.0.2/
 flutter_secure_storage_linux=/home/ashraf/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_secure_storage_linux-1.1.0/
 flutter_secure_storage_macos=/home/ashraf/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_secure_storage_macos-1.1.0/

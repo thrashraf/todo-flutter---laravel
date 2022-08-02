@@ -12,9 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:task/network_utils/Auth.dart';
 import 'package:task/screen/Home.dart';
 import 'package:task/widgets/CustomFormField.dart';
-import 'package:task/widgets/custom_passwordField.dart';
 import '../helpers/requestServer.dart';
-import '../widgets/custom_textField.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 

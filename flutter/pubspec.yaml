@@ -43,6 +43,8 @@ dependencies:
   email_validator: ^2.1.2
   firebase_auth: ^3.6.1
   google_sign_in: ^5.4.0
+  flutter_local_notifications: ^9.7.0
+  timezone: ^0.8.0
 
 dev_dependencies:
   flutter_test:

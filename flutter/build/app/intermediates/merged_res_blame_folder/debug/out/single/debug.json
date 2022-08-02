@@ -12,12 +12,20 @@
         "source": "/home/ashraf/task/flutter/android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
     },
     {
+        "merged": "/home/ashraf/task/flutter/build/app/intermediates/merged_res/debug/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/home/ashraf/task/flutter/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
         "merged": "/home/ashraf/task/flutter/build/app/intermediates/merged_res/debug/mipmap-xxhdpi_ic_launcher.png.flat",
         "source": "/home/ashraf/task/flutter/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
     },
     {
         "merged": "/home/ashraf/task/flutter/build/app/intermediates/merged_res/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
         "source": "/home/ashraf/task/flutter/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/ashraf/task/flutter/build/app/intermediates/merged_res/debug/drawable_ic_launcher.png.flat",
+        "source": "/home/ashraf/task/flutter/android/app/src/main/res/drawable/ic_launcher.png"
     },
     {
         "merged": "/home/ashraf/task/flutter/build/app/intermediates/merged_res/debug/mipmap-hdpi_ic_launcher.png.flat",

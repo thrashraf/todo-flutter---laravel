@@ -1,10 +1,12 @@
 -- Merging decision tree log ---
 application
-INJECTED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:3:4-34:19
+INJECTED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:3:4-35:19
 MERGED from [:firebase_auth] /home/ashraf/task/flutter/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
 MERGED from [:firebase_auth] /home/ashraf/task/flutter/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
 MERGED from [:firebase_core] /home/ashraf/task/flutter/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
 MERGED from [:firebase_core] /home/ashraf/task/flutter/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
+MERGED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:14:5-28:19
+MERGED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:14:5-28:19
 MERGED from [androidx.window:window:1.0.0-beta04] /home/ashraf/.gradle/caches/transforms-3/542a859793ec57d6a4d40865c7efc6d9/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:24:5-31:19
 MERGED from [androidx.window:window:1.0.0-beta04] /home/ashraf/.gradle/caches/transforms-3/542a859793ec57d6a4d40865c7efc6d9/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:24:5-31:19
 MERGED from [com.google.firebase:firebase-auth:21.0.6] /home/ashraf/.gradle/caches/transforms-3/166ab2ef700e025f6aeb6427bb5b0835/transformed/jetified-firebase-auth-21.0.6/AndroidManifest.xml:26:5-71:19
@@ -27,18 +29,21 @@ MERGED from [androidx.core:core:1.6.0] /home/ashraf/.gradle/caches/transforms-3/
 MERGED from [androidx.core:core:1.6.0] /home/ashraf/.gradle/caches/transforms-3/aa701b47cec244085d46a1a42fcc7fb9/transformed/core-1.6.0/AndroidManifest.xml:24:5-89
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/ashraf/.gradle/caches/transforms-3/cfaa035a43a363ad38f5365ab0b90d5a/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/ashraf/.gradle/caches/transforms-3/cfaa035a43a363ad38f5365ab0b90d5a/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [com.jakewharton.threetenabp:threetenabp:1.2.3] /home/ashraf/.gradle/caches/transforms-3/3d1e58076ca9cad4ad299d957e1deefe/transformed/jetified-threetenabp-1.2.3/AndroidManifest.xml:7:5-20
+MERGED from [com.jakewharton.threetenabp:threetenabp:1.2.3] /home/ashraf/.gradle/caches/transforms-3/3d1e58076ca9cad4ad299d957e1deefe/transformed/jetified-threetenabp-1.2.3/AndroidManifest.xml:7:5-20
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.6.0] /home/ashraf/.gradle/caches/transforms-3/aa701b47cec244085d46a1a42fcc7fb9/transformed/core-1.6.0/AndroidManifest.xml:24:18-86
 	android:name
 		INJECTED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml
 manifest
-ADDED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:1:1-35:12
-INJECTED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:1:1-35:12
-INJECTED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:1:1-35:12
-INJECTED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:1:1-35:12
-MERGED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:1:1-35:12
+ADDED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:1:1-36:12
+INJECTED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:1:1-36:12
+INJECTED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:1:1-36:12
+INJECTED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:1:1-36:12
+MERGED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:1:1-36:12
 MERGED from [:firebase_auth] /home/ashraf/task/flutter/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-17:12
 MERGED from [:firebase_core] /home/ashraf/task/flutter/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-17:12
+MERGED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-30:12
 MERGED from [:fluttertoast] /home/ashraf/task/flutter/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:device_info_plus] /home/ashraf/task/flutter/build/device_info_plus/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:path_provider_android] /home/ashraf/task/flutter/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
@@ -50,6 +55,7 @@ MERGED from [com.google.firebase:firebase-auth:21.0.6] /home/ashraf/.gradle/cach
 MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] /home/ashraf/.gradle/caches/transforms-3/89ba8e05a34cf734bca3914f66f9a9fb/transformed/jetified-firebase-auth-interop-20.0.0/AndroidManifest.xml:2:1-10:12
 MERGED from [com.google.firebase:firebase-common:20.1.1] /home/ashraf/.gradle/caches/transforms-3/fccaa6a289edc53f66333a729d5bb147/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:15:1-40:12
 MERGED from [androidx.security:security-crypto:1.1.0-alpha03] /home/ashraf/.gradle/caches/transforms-3/775eb9059a69e3696eaefe37bbefc18b/transformed/jetified-security-crypto-1.1.0-alpha03/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.media:media:1.1.0] /home/ashraf/.gradle/caches/transforms-3/7ba4e02eebf1c5c3cf0304c3d90bcbb5/transformed/media-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.gms:play-services-auth:20.0.1] /home/ashraf/.gradle/caches/transforms-3/66e089c069618d46ecbcfc30035e5ab3/transformed/jetified-play-services-auth-20.0.1/AndroidManifest.xml:17:1-40:12
 MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.1] /home/ashraf/.gradle/caches/transforms-3/661f963381eb53c6cea0a92b5aed8fdd/transformed/jetified-play-services-auth-api-phone-18.0.1/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.gms:play-services-auth-base:18.0.1] /home/ashraf/.gradle/caches/transforms-3/acbed7d481c2b99e9b41b58875afe33a/transformed/jetified-play-services-auth-base-18.0.1/AndroidManifest.xml:2:1-7:12
@@ -75,6 +81,7 @@ MERGED from [com.google.firebase:firebase-components:17.0.0] /home/ashraf/.gradl
 MERGED from [androidx.arch.core:core-runtime:2.0.0] /home/ashraf/.gradle/caches/transforms-3/39e1327ceafb30ef117040fe9315a97f/transformed/core-runtime-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] /home/ashraf/.gradle/caches/transforms-3/0874b2ce249aebd6be8581da2886a270/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /home/ashraf/.gradle/caches/transforms-3/4347c219bb49b5517c0901825a211a72/transformed/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.jakewharton.threetenabp:threetenabp:1.2.3] /home/ashraf/.gradle/caches/transforms-3/3d1e58076ca9cad4ad299d957e1deefe/transformed/jetified-threetenabp-1.2.3/AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.annotation:annotation-experimental:1.1.0] /home/ashraf/.gradle/caches/transforms-3/f95b31beb5b7f2eb055a97bf2e6fcf0f/transformed/jetified-annotation-experimental-1.1.0/AndroidManifest.xml:17:1-24:12
 INJECTED from /home/ashraf/task/flutter/android/app/src/debug/AndroidManifest.xml:1:1-8:12
 INJECTED from /home/ashraf/task/flutter/android/app/src/debug/AndroidManifest.xml:1:1-8:12
@@ -85,11 +92,11 @@ INJECTED from /home/ashraf/task/flutter/android/app/src/debug/AndroidManifest.xm
 		INJECTED from /home/ashraf/task/flutter/android/app/src/debug/AndroidManifest.xml
 	android:versionName
 		INJECTED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml
-		ADDED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:1:1-35:12
+		ADDED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:1:1-36:12
 		INJECTED from /home/ashraf/task/flutter/android/app/src/debug/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml
-		ADDED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:1:1-35:12
+		ADDED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:1:1-36:12
 		INJECTED from /home/ashraf/task/flutter/android/app/src/debug/AndroidManifest.xml
 	xmlns:android
 		ADDED from /home/ashraf/task/flutter/android/app/src/main/AndroidManifest.xml:1:11-69
@@ -101,6 +108,8 @@ MERGED from [:firebase_auth] /home/ashraf/task/flutter/build/firebase_auth/inter
 MERGED from [:firebase_auth] /home/ashraf/task/flutter/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:firebase_core] /home/ashraf/task/flutter/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:firebase_core] /home/ashraf/task/flutter/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:fluttertoast] /home/ashraf/task/flutter/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:fluttertoast] /home/ashraf/task/flutter/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:device_info_plus] /home/ashraf/task/flutter/build/device_info_plus/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
@@ -123,6 +132,8 @@ MERGED from [com.google.firebase:firebase-common:20.1.1] /home/ashraf/.gradle/ca
 MERGED from [com.google.firebase:firebase-common:20.1.1] /home/ashraf/.gradle/caches/transforms-3/fccaa6a289edc53f66333a729d5bb147/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.security:security-crypto:1.1.0-alpha03] /home/ashraf/.gradle/caches/transforms-3/775eb9059a69e3696eaefe37bbefc18b/transformed/jetified-security-crypto-1.1.0-alpha03/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.security:security-crypto:1.1.0-alpha03] /home/ashraf/.gradle/caches/transforms-3/775eb9059a69e3696eaefe37bbefc18b/transformed/jetified-security-crypto-1.1.0-alpha03/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.media:media:1.1.0] /home/ashraf/.gradle/caches/transforms-3/7ba4e02eebf1c5c3cf0304c3d90bcbb5/transformed/media-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.media:media:1.1.0] /home/ashraf/.gradle/caches/transforms-3/7ba4e02eebf1c5c3cf0304c3d90bcbb5/transformed/media-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.android.gms:play-services-auth:20.0.1] /home/ashraf/.gradle/caches/transforms-3/66e089c069618d46ecbcfc30035e5ab3/transformed/jetified-play-services-auth-20.0.1/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-auth:20.0.1] /home/ashraf/.gradle/caches/transforms-3/66e089c069618d46ecbcfc30035e5ab3/transformed/jetified-play-services-auth-20.0.1/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.1] /home/ashraf/.gradle/caches/transforms-3/661f963381eb53c6cea0a92b5aed8fdd/transformed/jetified-play-services-auth-api-phone-18.0.1/AndroidManifest.xml:5:5-44
@@ -173,6 +184,8 @@ MERGED from [androidx.interpolator:interpolator:1.0.0] /home/ashraf/.gradle/cach
 MERGED from [androidx.interpolator:interpolator:1.0.0] /home/ashraf/.gradle/caches/transforms-3/0874b2ce249aebd6be8581da2886a270/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /home/ashraf/.gradle/caches/transforms-3/4347c219bb49b5517c0901825a211a72/transformed/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /home/ashraf/.gradle/caches/transforms-3/4347c219bb49b5517c0901825a211a72/transformed/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:20:5-44
+MERGED from [com.jakewharton.threetenabp:threetenabp:1.2.3] /home/ashraf/.gradle/caches/transforms-3/3d1e58076ca9cad4ad299d957e1deefe/transformed/jetified-threetenabp-1.2.3/AndroidManifest.xml:5:5-44
+MERGED from [com.jakewharton.threetenabp:threetenabp:1.2.3] /home/ashraf/.gradle/caches/transforms-3/3d1e58076ca9cad4ad299d957e1deefe/transformed/jetified-threetenabp-1.2.3/AndroidManifest.xml:5:5-44
 MERGED from [androidx.annotation:annotation-experimental:1.1.0] /home/ashraf/.gradle/caches/transforms-3/f95b31beb5b7f2eb055a97bf2e6fcf0f/transformed/jetified-annotation-experimental-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.annotation:annotation-experimental:1.1.0] /home/ashraf/.gradle/caches/transforms-3/f95b31beb5b7f2eb055a97bf2e6fcf0f/transformed/jetified-annotation-experimental-1.1.0/AndroidManifest.xml:20:5-22:41
 INJECTED from /home/ashraf/task/flutter/android/app/src/debug/AndroidManifest.xml
@@ -221,6 +234,52 @@ ADDED from [:firebase_core] /home/ashraf/task/flutter/build/firebase_core/interm
 		ADDED from [:firebase_core] /home/ashraf/task/flutter/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:13:17-82
 	android:name
 		ADDED from [:firebase_core] /home/ashraf/task/flutter/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:12:17-124
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-81
+	android:name
+		ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-78
+uses-permission#android.permission.VIBRATE
+ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-66
+	android:name
+		ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-63
+uses-permission#android.permission.USE_FULL_SCREEN_INTENT
+ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:11:5-81
+	android:name
+		ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:11:22-78
+uses-permission#android.permission.SCHEDULE_EXACT_ALARM
+ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:12:5-79
+	android:name
+		ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:12:22-76
+receiver#com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver
+ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:15:9-17:40
+	android:exported
+		ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:17:13-37
+	android:name
+		ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:16:13-97
+receiver#com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver
+ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:18:9-27:20
+	android:exported
+		ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:20:13-37
+	android:name
+		ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:19:13-101
+intent-filter#action:name:android.intent.action.BOOT_COMPLETED+action:name:android.intent.action.MY_PACKAGE_REPLACED+action:name:android.intent.action.QUICKBOOT_POWERON+action:name:com.htc.intent.action.QUICKBOOT_POWERON
+ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:21:13-26:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:22:17-79
+	android:name
+		ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:22:25-76
+action#android.intent.action.MY_PACKAGE_REPLACED
+ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:23:17-84
+	android:name
+		ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:23:25-81
+action#android.intent.action.QUICKBOOT_POWERON
+ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-82
+	android:name
+		ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:24:25-79
+action#com.htc.intent.action.QUICKBOOT_POWERON
+ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:25:17-82
+	android:name
+		ADDED from [:flutter_local_notifications] /home/ashraf/task/flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:25:25-79
 uses-library#androidx.window.extensions
 ADDED from [androidx.window:window:1.0.0-beta04] /home/ashraf/.gradle/caches/transforms-3/542a859793ec57d6a4d40865c7efc6d9/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
 	android:required
