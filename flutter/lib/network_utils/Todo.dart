@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:task/network_utils/Notification.dart';
 import 'package:task/providers/TodoProviders.dart';
 import '../Models/Todo.dart';
 
@@ -15,7 +16,8 @@ import 'package:device_info_plus/device_info_plus.dart';
 
 class TodoApi {
   final String _url = 'http://192.168.0.107:8000/api';
-  final storage = new FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
+  late final service = Notifications();
 
   Future requestTodo(id) async {
     final response = await http.get(Uri.parse('$_url/todo/$id'),
@@ -31,7 +33,7 @@ class TodoApi {
   Future createTodo(newData) async {
     final response = await http.post(Uri.parse('$_url/createTodo'),
         headers: await _setHeaders(), body: jsonEncode(newData));
-
+    print(newData);
     var res = jsonDecode(response.body);
     if (response.statusCode == 200) {
       return res;

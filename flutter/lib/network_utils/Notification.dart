@@ -43,13 +43,12 @@ class Notifications {
           {int id = 0,
           String? title,
           String? body,
-          required int second}) async =>
+          required DateTime dateTime}) async =>
       _notification.zonedSchedule(
         id,
         title,
         body,
-        tz.TZDateTime.from(
-            DateTime.now().add(Duration(seconds: second)), tz.local),
+        tz.TZDateTime.from(dateTime, tz.local),
         await _notificationDetails(),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:

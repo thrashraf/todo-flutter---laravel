@@ -30,12 +30,6 @@ class _DialogState extends State<DialogWidget> {
     service.initialize();
   }
 
-  void updateTime(newTime) async {
-    setState(() => dateTime = newTime);
-    await service.scheduleNotification(
-        body: 'test', title: 'Reminder', second: 3);
-  }
-
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -47,90 +41,93 @@ class _DialogState extends State<DialogWidget> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           form(
-              mode: widget.mode,
-              context: context,
-              editTodo: widget.todo,
-              dateTime: dateTime,
-              updateTime: updateTime)
+            mode: widget.mode,
+            editTodo: widget.todo,
+          )
         ],
       ),
     );
   }
 }
 
-Widget form(
-    {required mode,
-    required context,
-    required editTodo,
-    required dateTime,
-    required updateTime}) {
-  final title = TextEditingController();
-  final provider = Provider.of<TodoProviders>(context, listen: false);
-  late Todo newTodo = Todo(id: editTodo.id, task: title.text, isCheck: 0);
+class form extends StatelessWidget {
+  final editTodo;
+  final mode;
 
-  final _formKey = GlobalKey<FormState>();
-  return Form(
-    key: _formKey,
-    child: Column(
-      children: [
-        Padding(
-            padding: EdgeInsets.all(8.0),
-            child: CustomForm(
-                label: 'todos',
-                validation: (text) {
-                  if (text == null || text.isEmpty) {
-                    return 'please insert text';
-                  }
-                  return null;
-                },
-                isPassword: false,
-                textController: title)),
-        SizedBox(
-          width: double.infinity,
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: ElevatedButton.icon(
-                onPressed: () async {
-                  final date = await pickDate(context);
+  const form({
+    Key? key,
+    required this.mode,
+    required this.editTodo,
+  }) : super(key: key);
 
-                  if (date == null) return;
-                  final time = await pickTime(context);
+  @override
+  Widget build(BuildContext context) {
+    final title = TextEditingController();
+    final provider = Provider.of<TodoProviders>(context, listen: false);
+    late Todo newTodo = Todo(id: editTodo.id, task: title.text, isCheck: 0);
 
-                  if (time == null) return;
-                  final newDateTime = DateTime(
-                      date.year, date.month, date.day, time.hour, time.minute);
+    DateTime? dateTime;
+    final _formKey = GlobalKey<FormState>();
 
-                  updateTime(newDateTime);
-                },
-                icon: Icon(Icons.alarm),
-                label: dateTime != null
-                    ? Text(dateTime.toString())
-                    : const Text('Add Reminder')),
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          Padding(
+              padding: EdgeInsets.all(8.0),
+              child: CustomForm(
+                  label: 'todos',
+                  validation: (text) {
+                    if (text == null || text.isEmpty) {
+                      return 'please insert text';
+                    }
+                    return null;
+                  },
+                  isPassword: false,
+                  textController: title)),
+          SizedBox(
+            width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: ElevatedButton.icon(
+                  onPressed: () async {
+                    final date = await pickDate(context);
+
+                    if (date == null) return;
+                    final time = await pickTime(context);
+
+                    if (time == null) return;
+                    dateTime = DateTime(date.year, date.month, date.day,
+                        time.hour, time.minute);
+                  },
+                  icon: Icon(Icons.alarm),
+                  label: const Text('Add Reminder')),
+            ),
           ),
-        ),
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                if (mode != 'add') {
-                  provider.editTodo(editTodo, newTodo);
-                } else {
-                  provider.addNewTodo(newTodo);
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  if (mode != 'add') {
+                    provider.editTodo(editTodo, newTodo);
+                  } else {
+                    provider.addNewTodo(newTodo, dateTime);
+                  }
                 }
 
                 Navigator.pop(context);
-              }
-            },
-            style: OutlinedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(7),
-                ),
-                padding: EdgeInsets.all(12)),
-            child: Text('Saved'),
+              },
+              style: OutlinedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(7),
+                  ),
+                  padding: EdgeInsets.all(12)),
+              child: Text('Saved'),
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }
